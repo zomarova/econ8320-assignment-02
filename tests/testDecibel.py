@@ -14,15 +14,20 @@ code = [i for i in doc['cells'] if i['cell_type']=='code']
 for i in code:
     for j in i['source']:
         if "#si-decibel" in j:
-            print(i['source'])
+            
             f = io.StringIO()
+            codelist = i['source']
+            for k in range(len(codelist)):
+                if ("x=" in codelist[k])|("x =" in codelist[k]):
+                    codelist[k] = 'x = 112\n'
+            print(codelist)
             with redirect_stdout(f):
-                exec("".join(i['source']))
+                exec("".join(codelist))
             s = f.getvalue()
 
 class testCases(unittest.TestCase):
     
     # input will return '112' during this test
-    @patch('builtins.input', return_value='112')
-    def testSoundLevel(self, input):
+    # @patch('builtins.input', return_value='112')
+    def testSoundLevel(self):
         self.assertTrue(bool(re.search('[Jj]ackhammer', s)) & bool(re.search('[Ll]awnmower', s)), "The test value is between two sounds. Make sure you're describing that!")
