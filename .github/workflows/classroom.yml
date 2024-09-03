@@ -1,0 +1,88 @@
+name: Autograding Tests
+'on': {}
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Decibel Test
+      id: decibel-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Decibel Test
+        setup-command: ''
+        command: python -m unittest tests/testDecibel.py
+        timeout: 1
+        max-score: 1
+    - name: Fibonacci Test
+      id: fibonacci-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Fibonacci Test
+        setup-command: ''
+        command: python -m unittest tests/testFibonacci.py
+        timeout: 1
+        max-score: 1
+    - name: Fours Test
+      id: fours-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Fours Test
+        setup-command: ''
+        command: python -m unittest tests/testFours.py
+        timeout: 1
+        max-score: 1
+    - name: Prime Test
+      id: prime-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Prime Test
+        setup-command: ''
+        command: python -m unittest tests/testPrime.py
+        timeout: 1
+        max-score: 1
+    - name: Print Loop Test
+      id: print-loop-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Print Loop Test
+        setup-command: ''
+        command: python -m unittest tests/testPrintLoop.py
+        timeout: 1
+        max-score: 1
+    - name: Taxi Test
+      id: taxi-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Taxi Test
+        setup-command: ''
+        command: python -m unittest tests/testTaxi.py
+        timeout: 1
+        max-score: 1
+    - name: While Loop Test
+      id: while-loop-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: While Loop Test
+        setup-command: ''
+        command: python -m unittest tests/testWhileLoop.py
+        timeout: 1
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        DECIBEL-TEST_RESULTS: "${{steps.decibel-test.outputs.result}}"
+        FIBONACCI-TEST_RESULTS: "${{steps.fibonacci-test.outputs.result}}"
+        FOURS-TEST_RESULTS: "${{steps.fours-test.outputs.result}}"
+        PRIME-TEST_RESULTS: "${{steps.prime-test.outputs.result}}"
+        PRINT-LOOP-TEST_RESULTS: "${{steps.print-loop-test.outputs.result}}"
+        TAXI-TEST_RESULTS: "${{steps.taxi-test.outputs.result}}"
+        WHILE-LOOP-TEST_RESULTS: "${{steps.while-loop-test.outputs.result}}"
+      with:
+        runners: decibel-test,fibonacci-test,fours-test,prime-test,print-loop-test,taxi-test,while-loop-test
