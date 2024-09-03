@@ -86,3 +86,4 @@ jobs:
         WHILE-LOOP-TEST_RESULTS: "${{steps.while-loop-test.outputs.result}}"
       with:
         runners: decibel-test,fibonacci-test,fours-test,prime-test,print-loop-test,taxi-test,while-loop-test
+
