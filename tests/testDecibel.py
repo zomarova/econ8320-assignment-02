@@ -18,7 +18,7 @@ for i in code:
             f = io.StringIO()
             codelist = i['source']
             for k in range(len(codelist)):
-                if ("input" in codelist[k])|("input" in codelist[k]):
+                if ("input(" in codelist[k])|("input (" in codelist[k]):
                     codelist[k] = 'x = 112\n'
             print(codelist)
             with redirect_stdout(f):
